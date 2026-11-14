@@ -10,7 +10,7 @@ metadata:
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: flux-operator
+      app.kubernetes.io/managed-by: flux-operator
   # If .inputs.source.type is equal to HelmRepository, .inputs.name MUST be equal to the chart name.
   # Verify the chart name using $ helm search repo <<myrepo>>.
   inputs:
