@@ -98,7 +98,7 @@ spec:
       source:
         type: OCIRepository
         url: oci://ghcr.io/tektoncd/operator/charts/tekton-operator
-        tag: 0.80.0
+        tag: 0.81.3
 
   resourcesTemplate: |
     ---
