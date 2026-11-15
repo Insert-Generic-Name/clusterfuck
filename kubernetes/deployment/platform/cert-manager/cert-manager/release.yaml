@@ -18,7 +18,5 @@ spec:
       enabled: true
       servicemonitor:
         enabled: false # chagemelater
-    podDisruptionBudget:
-      enabled: true
     crds:
       enabled: true
