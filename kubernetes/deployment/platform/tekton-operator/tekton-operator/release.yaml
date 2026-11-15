@@ -8,4 +8,22 @@ spec:
     name: tekton-operator
   values:
     installCRDs: true
-    controllers: "kubernetes" # Install tektondashboard
+    controllers: >-
+      tektonconfig,
+      tektonpipeline,
+      tektontrigger,
+      tektonchain,
+      tektonresult,
+      manualapprovalgate,
+      tektonpruner,
+      tektonscheduler,
+      tektonmulticlusterproxyaae,
+      openshiftpipelinesascode,
+      tektondashboard
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
