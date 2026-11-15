@@ -8,10 +8,10 @@ spec:
     name: tekton-operator
   values:
     installCRDs: true
-    # securityContext:
-    #   capabilities:
-    #     drop:
-    #       - ALL
-    #   readOnlyRootFilesystem: true
-    #   runAsNonRoot: true
-    #   runAsUser: 1000
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
