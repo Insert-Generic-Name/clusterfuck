@@ -58,7 +58,7 @@
         "helmfile": "helm",
         "ai": "gemini-ai",
         "vault": "guard",
-        "woodpecker": "ci",
+        "tekton-operator": "ci",
         "omni": "core",
         ".mise": "project",
         "lifestyle": "java",
