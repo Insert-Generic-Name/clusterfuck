@@ -1,0 +1,16 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: origin
+  namespace: tekton-operator
+spec:
+  url: "http://192.168.1.60:3000/Insert-Generic-Name/clusterfuck"
+  git_provider:
+    type: forgejo
+    url: "http://192.168.1.60:3000"
+    secret:
+      name: tekton
+      key: forgejo-token
+    webhook_secret:
+      name: tekton
+      key: forgejo-webhook
