@@ -58,6 +58,7 @@
         "helmfile": "helm",
         "ai": "gemini-ai",
         "vault": "guard",
+        "tekton": "ci",
         "tekton-operator": "ci",
         "omni": "core",
         ".mise": "project",
