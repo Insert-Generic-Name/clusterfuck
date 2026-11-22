@@ -26,7 +26,7 @@ steps:
           }
         }
         EOF
-      - echo ${CI_WORKSPACE}
+      - echo $${CI_WORKSPACE}
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
