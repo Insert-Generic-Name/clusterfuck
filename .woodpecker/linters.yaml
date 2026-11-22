@@ -28,7 +28,6 @@ steps:
   - name: Flux operator resources validation
     image: ${IMAGE}
     commands:
-      - echo "mise --version"
       - mise exec -- flux-operator build rset -f ./kubernetes/flux-system/cluster/platform/rs.yaml | mise exec -- flux-schema validate -s ecosystem -v
     when:
       - path: "kubernetes/flux-system/cluster/platform/**"
