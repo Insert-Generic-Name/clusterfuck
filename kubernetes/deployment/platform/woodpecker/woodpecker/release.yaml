@@ -38,7 +38,7 @@ spec:
             secretKeyRef:
               name: woodpecker
               key: woodpecker-forgejo-secret
-        WOODPECKER_ENVIRONMENT: "IMAGE:192.168.1.60:3000/insert-generic-name/toolbox:02892c2d464fae2639742ff00080a7c279f1ac5a"
+        WOODPECKER_ENVIRONMENT: "IMAGE:forgejo.slop.${DOMAIN}/insert-generic-name/toolbox:02892c2d464fae2639742ff00080a7c279f1ac5a" #Remove .slop subdomain once HTTPS is set
       serviceAccount:
         create: true
       securityContext:
