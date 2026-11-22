@@ -1,0 +1,41 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: lint-k8s
+spec:
+  params:
+    - name: registry
+      type: object
+      properties:
+        url:
+          type: string
+        tag:
+          type: string
+  steps:
+    - name: build-validate
+      image: "$(params.registry.url):$(params.registry.tag)"
+      script: |
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        mise exec -- flate build all | \
+        mise exec -- kubeconform \
+        -verbose \
+        -output "pretty" \
+        -summary \
+        -strict \
+        -schema-location default \
+        -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
+---
+apiVersion: tekton.dev/v1
+kind: TaskRun
+metadata:
+  name: lint-k8s
+spec:
+  taskRef:
+    name: linting-k8s
+  params:
+    - name: registry
+      value:
+        url: "my-registry"
+        tag: "latest"
