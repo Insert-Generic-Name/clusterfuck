@@ -5,17 +5,16 @@ when:
 steps:
   - name: Build & push to registry
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
-    entrypoint: ["/busybox/sh"]
     commands:
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
         --context=dir:///.mise
         --destination=$REGISTRY:$CI_COMMIT_SHA
-    backend_options:
-      kubernetes:
-        secrets:
-          - name: ci
-            key: ci-registry
-            target:
-              env: REGISTRY
+    # backend_options:
+    #   kubernetes:
+    #     secrets:
+    #       - name: ci
+    #         key: ci-registry
+    #         target:
+    #           env: REGISTRY
