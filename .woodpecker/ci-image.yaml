@@ -15,6 +15,7 @@ steps:
       - echo ${CI_REPO_URL}
       - echo ${CI_REPO_OWNER}
       - echo ${CI_FORGE_URL}
+      - echo ${CI_FORGE_HOST}
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
