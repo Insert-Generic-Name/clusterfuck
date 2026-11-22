@@ -21,7 +21,7 @@ steps:
         {
           "auths": {
             "192.168.1.60:3000": {
-              "auth": "${CI_FORGE_CREDENTIALS}"
+              "auth": "$${CI_FORGE_CREDENTIALS}"
             }
           }
         }
