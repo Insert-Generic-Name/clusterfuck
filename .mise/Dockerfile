@@ -1,6 +1,6 @@
 FROM alpine:3.24
 
-ARG MISE_VERSION=v2026.11.12
+ARG MISE_VERSION=v2026.10.4
 
 # mise must be installed inside $PATH
 RUN apk add curl git && \
