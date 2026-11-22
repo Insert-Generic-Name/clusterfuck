@@ -39,6 +39,6 @@ spec:
         actions:
           enabled: false
       metrics:
-      enabled: false # changeme
+        enabled: false # changeme
       serviceMonitor:
         enabled: false # changeme
