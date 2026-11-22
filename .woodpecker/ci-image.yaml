@@ -5,15 +5,8 @@ when:
 steps:
   - name: Build & push to registry
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
+    entrypoint: ["/busybox/sh"]
     commands:
-      - |
-        set -x
-        pwd
-        echo "CI_WORKSPACE=$CI_WORKSPACE"
-        ls -la /
-        ls -la /workspace
-        ls -la /workspace/.mise
-        ls -la /kaniko
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
