@@ -29,8 +29,8 @@ steps:
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
-        --context=dir://$${CI_WORKSPACE}/.mise
-        --destination=192.168.1.60:3000/$${CI_REPO}/toolbox:latest
+        --context=dir://${CI_WORKSPACE}/.mise
+        --destination=192.168.1.60:3000/${CI_REPO}/toolbox:latest
     backend_options:
       kubernetes:
         secrets:
