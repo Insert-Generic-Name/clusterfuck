@@ -13,7 +13,7 @@ steps:
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
     commands:
       - echo ${CI_REPO_URL}
-      - echo ${}
+      - echo ${CI_REPO_OWNER}
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
