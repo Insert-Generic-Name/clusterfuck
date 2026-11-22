@@ -4,14 +4,14 @@ when:
 steps:
   - depends_on: [] # Enable parallel execution on steps
     name: Terraform linting
-    image: ${image}
+    image: ${IMAGE}
     commands:
       - mise exec -- tflint --chdir=./terraform --recursive
     when:
       - path: "**/*.tf"
 
   - name: Cluster resources validation
-    image: ${image}
+    image: ${IMAGE}
     commands:
       - >
         mise exec -- flate build all |
@@ -26,7 +26,7 @@ steps:
       path: "kubernetes/**"
 
   - name: Flux operator resources validation
-    image: ${image}
+    image: ${IMAGE}
     commands:
       - mise exec -- flux-operator build rset -f ./kubernetes/flux-system/cluster/platform/rs.yaml | mise exec -- flux-schema validate -s ecosystem -v
     when:
