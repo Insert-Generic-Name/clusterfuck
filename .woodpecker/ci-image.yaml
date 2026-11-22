@@ -14,7 +14,7 @@ when:
 
 steps:
   - name: Build & push image to registry
-    image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks shell
+    image: ghcr.io/osscontainertools/kaniko:v1.29.1-debug # Main image lacks shell
     commands:
       - |
         cat <<EOF > /kaniko/.docker/config.json
