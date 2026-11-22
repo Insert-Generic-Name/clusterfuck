@@ -5,57 +5,6 @@ when:
         [".mise/config.ci.toml", ".mise/mise.ci.lock", ".mise/Dockerfile"]
 
 steps:
-  # - name: Exit workflow if repo does not have permissions to run privileged containers
-  #   image: alpine:3.24
-  #   when:
-  #     - evaluate: 'CI_REPO_TRUSTED_SECURITY == "false"'
-
-  # - name: dockerd
-  #   image: docker:29.9.3-dind
-  #   privileged: true
-  #   detach: true
-
-  # - name: Build & push image to registry
-  #   image: docker:29.9.3-cli
-  #   commands:
-  #     - "docker build --progress=plain --no-cache -t $REGISTRY/insert-generic-name/toolbox:$CI_COMMIT_SHA .mise"
-  #     - docker push $REGISTRY/insert-generic-name/toolbox:$CI_COMMIT_SHA
-  #   backend_options:
-  #     kubernetes:
-  #       secrets:
-  #         - name: woodpecker
-  #           key: woodpecker-forgejo-registry
-  #           target:
-  #             env: REGISTRY
-
-  # Refer to: https://github.com/moby/buildkit/blob/master/docs/rootless.md#containerized-deployment
-  # - name: Build & push to image registry
-  #   image: moby/buildkit:rootless
-  #   entrypoint: ["rootlesskit", "buildkitd", "--oci-worker-no-process-sandbox"]
-  #   commands:
-  #     - >
-  #       buildctl --addr docker-container://buildkitd build
-  #       --frontend=dockerfile.v0
-  #       --local context=.mise
-  #       --local dockerfile=.mise
-  #       --local context=.mise
-  #       --output type=image,name=$REGISTRY,push=true,registry.insecure=true
-  #     #  "registry.insecure" is only used because forgejo doesnt serve on HTTPS YET
-  #   backend_options:
-  #     kubernetes:
-  #       securityContext:
-  #         seccompProfile:
-  #           type: Unconfined
-  #         appArmorProfile:
-  #           type: Unconfined
-  #       secrets:
-  #         - name: ci
-  #           key: ci-registry
-  #           target:
-  #             env: REGISTRY
-
-  # MAKE STEP 1 GET SECRETS FROM K8S AND STORE THEM SOMEWHERE AND THEN PASS THEM TO THE KANIKO PLUGIN ( STEP 2)
-  # SINCE WORKDIR IS SHARED ACROSS STEPS
   - name: Build & push to registry
     image: ghcr.io/osscontainertools/kaniko:latest
     entrypoint: ["/kaniko/executor"]
@@ -71,19 +20,3 @@ steps:
             key: ci-registry
             target:
               env: REGISTRY
-
-  # - name: Build & push to registry
-  #   image: woodpeckerci/plugin-kaniko
-  #   settings:
-  #     dockerfile: .mise/Dockerfile
-  #     repo: $REGISTRY
-  #     registry: $REGISTRY
-  #     username: $USER
-  #     password: $PASSWORD
-  #   backend_options:
-  #     kubernetes:
-  #       secrets:
-  #         - name: ci
-  #           key: ci-registry
-  #           target:
-  #             env: REGISTRY
