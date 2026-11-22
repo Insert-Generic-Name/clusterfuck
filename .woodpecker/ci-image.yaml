@@ -10,11 +10,8 @@ steps:
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
         --context=dir:///.mise
-        --destination=$REGISTRY:$CI_COMMIT_SHA
-    # backend_options:
-    #   kubernetes:
-    #     secrets:
-    #       - name: ci
-    #         key: ci-registry
-    #         target:
-    #           env: REGISTRY
+        --destination=${REGISTRY}:${CI_COMMIT_SHA}
+    backend_options:
+      kubernetes:
+        secrets:
+          - name: woodpecker
