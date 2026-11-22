@@ -5,7 +5,6 @@ when:
 steps:
   - name: Build & push to registry
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
-    entrypoint: ["/kaniko/executor"]
     commands:
       - >
         --dockerfile=.mise/Dockerfile
