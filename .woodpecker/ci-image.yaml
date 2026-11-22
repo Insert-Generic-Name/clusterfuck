@@ -12,15 +12,14 @@ steps:
   - name: Build & push to registry
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
     commands:
-      - echo ${CI_REPO_URL}
-      - echo ${CI_REPO_OWNER}
-      - echo ${CI_FORGE_URL}
-      - echo ${CI_FORGE_HOST}
+      # Migrate to $CI_FORGE_HOST envvar when its published ( to get forgejo registry url without http scheme), currently its only in the "next" part of the docs, not published yet for 1.20.1
+      # https://woodpecker-ci.org/docs/next/usage/environment#:~:text=CI%5FFORGE%5FHOST
+      # Pair it with CI repo owner ( $CI_FORGE_HOST/$CI_REPO_OWNER/image:tag)
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
         --context=dir:///.mise
-        --destination=${REGISTRY}:${CI_COMMIT_SHA}
+        --destination=192.168.1.60:3000/${CI_REPO_OWNER}/toolbox:${CI_COMMIT_SHA}
     backend_options:
       kubernetes:
         secrets:
