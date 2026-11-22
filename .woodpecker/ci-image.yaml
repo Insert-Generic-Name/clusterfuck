@@ -8,19 +8,37 @@ when:
         ".woodpecker/ci-image.yaml",
       ]
 
+# Migrate to $CI_FORGE_HOST envvar when its published ( to get forgejo registry url without http scheme), currently its only in the "next" part of the docs, not published yet for 1.20.1
+# https://woodpecker-ci.org/docs/next/usage/environment#:~:text=CI%5FFORGE%5FHOST
+# Pair it with CI repo owner ( $CI_FORGE_HOST/$CI_REPO_OWNER/image:tag)
+
 steps:
-  - name: Build & push to registry
-    image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
+  - name: Populate registry credentials
+    image: ghcr.io/osscontainertools/kaniko:debug
     commands:
-      # Migrate to $CI_FORGE_HOST envvar when its published ( to get forgejo registry url without http scheme), currently its only in the "next" part of the docs, not published yet for 1.20.1
-      # https://woodpecker-ci.org/docs/next/usage/environment#:~:text=CI%5FFORGE%5FHOST
-      # Pair it with CI repo owner ( $CI_FORGE_HOST/$CI_REPO_OWNER/image:tag)
+      - |
+        tee /kaniko/.docker/config.json <<EOF
+        {
+          "auths": {
+            "192.168.1.60:3000": {
+              "auth": "${CI_FORGE_CREDENTIALS}"
+            }
+          }
+        }
+        EOF
+    backend_options:
+      kubernetes:
+        secrets:
+          - name: woodpecker
+            key: ci-forge-credentials
+            target:
+              env: CI_FORGE_CREDENTIALS
+
+  - name: Build & push to registry
+    image: ghcr.io/osscontainertools/kaniko:debug
+    commands:
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
         --context=dir:///.mise
         --destination=192.168.1.60:3000/${CI_REPO_OWNER}/toolbox:${CI_COMMIT_SHA}
-    backend_options:
-      kubernetes:
-        secrets:
-          - name: woodpecker
