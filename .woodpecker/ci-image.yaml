@@ -13,8 +13,8 @@ when:
 # Pair it with CI repo owner ( $CI_FORGE_HOST/$CI_REPO_OWNER/image:tag)
 
 steps:
-  - name: Populate registry credentials
-    image: ghcr.io/osscontainertools/kaniko:debug
+  - name: Build & push image to registry
+    image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks shell
     commands:
       - |
         tee /kaniko/.docker/config.json <<EOF
@@ -26,6 +26,11 @@ steps:
           }
         }
         EOF
+      - >
+        /kaniko/executor
+        --dockerfile=.mise/Dockerfile
+        --context=dir:///.mise
+        --destination=192.168.1.60:3000/${CI_REPO_OWNER}/toolbox:${CI_COMMIT_SHA}
     backend_options:
       kubernetes:
         secrets:
@@ -33,12 +38,3 @@ steps:
             key: ci-forge-credentials
             target:
               env: CI_FORGE_CREDENTIALS
-
-  - name: Build & push to registry
-    image: ghcr.io/osscontainertools/kaniko:debug
-    commands:
-      - >
-        /kaniko/executor
-        --dockerfile=.mise/Dockerfile
-        --context=dir:///.mise
-        --destination=192.168.1.60:3000/${CI_REPO_OWNER}/toolbox:${CI_COMMIT_SHA}
