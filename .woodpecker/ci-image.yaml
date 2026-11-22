@@ -26,6 +26,7 @@ steps:
           }
         }
         EOF
+      - ls && pwd
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
