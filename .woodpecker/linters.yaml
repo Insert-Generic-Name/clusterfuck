@@ -11,8 +11,7 @@ steps:
     commands:
       - mise exec -- tflint --chdir=./terraform --recursive
     when:
-      - path:
-          include: ["*.tf", "**/*.tf"]
+      - path: "**/*.tf"
 
   - name: Cluster resources validation
     image: *image
