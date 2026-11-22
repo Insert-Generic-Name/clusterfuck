@@ -12,7 +12,8 @@ steps:
   - name: Build & push to registry
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
     commands:
-      - echo ${CI_REPO}
+      - echo ${CI_REPO_URL}
+      - echo ${}
       - >
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
