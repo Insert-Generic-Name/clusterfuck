@@ -7,6 +7,7 @@ steps:
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
     commands:
       - >
+        /kaniko/executor
         --dockerfile=.mise/Dockerfile
         --context=dir:///.mise
         --destination=$REGISTRY:$CI_COMMIT_SHA
