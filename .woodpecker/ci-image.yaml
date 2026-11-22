@@ -17,7 +17,7 @@ steps:
     image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks shell
     commands:
       - |
-        tee /kaniko/.docker/config.json <<EOF
+        cat <<EOF > /kaniko/.docker/config.json
         {
           "auths": {
             "192.168.1.60:3000": {
