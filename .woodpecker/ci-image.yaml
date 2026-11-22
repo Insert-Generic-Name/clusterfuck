@@ -1,11 +1,10 @@
 when:
-  - event: ["push", "pull_request"]
+  - event: ["push", "pull_request", "manual"]
     path: [".mise/config.ci.toml", ".mise/mise.ci.lock", ".mise/Dockerfile"]
-  - event: manual
 
 steps:
   - name: Build & push to registry
-    image: ghcr.io/osscontainertools/kaniko:debug
+    image: ghcr.io/osscontainertools/kaniko:debug # Main image lacks a shell
     entrypoint: ["/kaniko/executor"]
     commands:
       - >
