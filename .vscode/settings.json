@@ -35,7 +35,7 @@
         "source.yaml": "parcel",
         "secrets.yaml": "lock",
         "kustomization.yaml": "kubernetes",
-        "rs.yaml": "azure-pipelines",
+        "rs.yaml": "kubernetes",
         "*.just": "just"
     },
     "material-icon-theme.folders.associations": {
@@ -46,6 +46,7 @@
         "flux-system": "generator",
         "forgejo": "git",
         "kube-system": "controller",
+        "renovate-operator": "update",
         "productivity": "tasks",
         "security": "guard",
         "storage": "archive",
