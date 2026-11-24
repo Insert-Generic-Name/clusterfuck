@@ -13,3 +13,9 @@ spec:
     name: forgejo
     endpoint: "https://forgejo.slop.${DOMAIN}" # Remove .slop. once https is set!
   parallelism: 1
+  renovateConfig:
+    fileName: config.json
+    inline: |
+      {
+      "gitAuthor": "Renovate Bot <renovate@local>"
+      }
