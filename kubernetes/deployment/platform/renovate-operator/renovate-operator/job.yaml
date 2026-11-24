@@ -11,5 +11,5 @@ spec:
   secretRef: "renovate-operator"
   provider:
     name: forgejo
-    endpoint: "https://forgejo.slop.${DOMAIN}"
+    endpoint: "https://forgejo.slop.${DOMAIN}" # Remove .slop. once https is set!
   parallelism: 1
