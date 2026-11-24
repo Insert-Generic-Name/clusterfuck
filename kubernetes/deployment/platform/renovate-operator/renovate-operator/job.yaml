@@ -1,0 +1,15 @@
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: renovate-operator
+  namespace: renovate-operator
+spec:
+  schedule: "0 * * * *"
+  # discoveryFilters:
+  #   - "MyOrg/*"
+  image: renovate/renovate:44
+  secretRef: "renovate-secret"
+  provider:
+    name: forgejo
+    endpoint: "https://forgejo.slop.${DOMAIN}"
+  parallelism: 1
