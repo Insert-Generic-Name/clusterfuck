@@ -12,7 +12,7 @@ spec:
     endpoint: "https://forgejo.${DOMAIN}:9003" # Remove :9003 once https is set!
   parallelism: 1
   discoveryFilters:
-    - "insert-generic-name/*"
+    - "insert-generic-name/clusterfuck"
   renovateConfig:
     fileName: config.json
     inline: |
