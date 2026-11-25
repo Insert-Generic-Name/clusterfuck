@@ -13,9 +13,9 @@ spec:
   parallelism: 1
   discoveryFilters:
     - "insert-generic-name/*"
-  renovateConfig:
-    fileName: config.json
-    # inline: |
-    #   {
-    #   "gitAuthor": "Renovate Bot <renovate@local>"
-    #   }
+  # renovateConfig:
+  #   fileName: config.json
+  #   inline: |
+  #     {
+  #     "gitAuthor": "Renovate Bot <renovate@local>"
+  #     }
