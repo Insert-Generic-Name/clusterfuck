@@ -67,7 +67,7 @@ steps:
                   image: $${IMAGE}
                   command: ["sh", "-c", "sleep infinity"]
                   securityContext:
-                    allowPrivilegeEscalation: fals
+                    allowPrivilegeEscalation: false
                     capabilities:
                       drop:
                         - ALL
