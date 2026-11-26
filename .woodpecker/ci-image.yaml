@@ -35,7 +35,7 @@ steps:
             target:
               env: CI_FORGE_CREDENTIALS
 
-  - name: Pull image on all nodes
+  - name: Run image puller
     image: alpine:3.22
     commands:
       - apk add kubectl
