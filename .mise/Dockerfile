@@ -3,7 +3,7 @@ FROM alpine:3.24
 ARG MISE_VERSION=v2026.11.12
 
 # mise must be installed inside $PATH
-RUN apk add curl git && \
+RUN apk add --no-cache curl git && \
     curl -fsSL https://mise.run | \
     MISE_INSTALL_PATH="/usr/local/bin/mise" \
     MISE_VERSION=${MISE_VERSION} sh

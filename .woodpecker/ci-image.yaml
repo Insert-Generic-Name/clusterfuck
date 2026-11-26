@@ -38,8 +38,9 @@ steps:
   - name: Run image puller
     image: alpine:3.22
     commands:
-      - apk add kubectl
+      - apk add --no-cache kubectl
       - |
+        trap 'kubectl delete daemonset image-puller-$${CI_COMMIT_SHA} --ignore-not-found --timeout=1m' EXIT
         kubectl apply -f - <<EOF
         apiVersion: apps/v1
         kind: DaemonSet
@@ -64,7 +65,7 @@ steps:
               containers:
                 - name: image-puller
                   imagePullPolicy: Always
-                  image: $${CI_FORGE_HOST}/$${CI_REPO}/toolbox:latest
+                  image: $${IMAGE}
                   command: ["sh", "-c", "sleep infinity"]
                   securityContext:
                     allowPrivilegeEscalation: false
@@ -74,7 +75,6 @@ steps:
                     runAsNonRoot: true
         EOF
         kubectl rollout status daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker --timeout=2m
-        kubectl delete daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker
     backend_options:
       kubernetes:
         serviceAccountName: ci-runner
