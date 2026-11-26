@@ -71,7 +71,6 @@ steps:
                     capabilities:
                       drop:
                         - ALL
-                    runAsNonRoot: true
         EOF
 
         cleanup() {
