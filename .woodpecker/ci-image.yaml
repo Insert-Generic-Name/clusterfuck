@@ -81,6 +81,7 @@ steps:
         EOF
 
         kubectl rollout status daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker --timeout=2m
+        exit 1
     backend_options:
       kubernetes:
         serviceAccountName: ci-runner
