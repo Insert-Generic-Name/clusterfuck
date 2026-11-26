@@ -8,19 +8,15 @@ when:
         ".woodpecker/ci-image.yaml",
       ]
 
-# Migrate to $CI_FORGE_HOST envvar when its published ( to get forgejo registry url without http scheme), currently its only in the "next" part of the docs, not published yet for 1.20.1
-# https://woodpecker-ci.org/docs/next/usage/environment#:~:text=CI%5FFORGE%5FHOST
-# Pair it with CI repo owner ( $CI_FORGE_HOST/$CI_REPO_OWNER/image:tag)
-
 steps:
   - name: Build & push image to registry
-    image: ghcr.io/osscontainertools/kaniko:v1.29.1-debug # Main image lacks shell
+    image: ghcr.io/osscontainertools/kaniko:v1.29.1-debug # Main image lacks a shell
     commands:
       - |
         cat <<EOF > /kaniko/.docker/config.json
         {
           "auths": {
-            "192.168.1.60:3000": {
+            "$${CI_FORGE_HOST}": {
               "auth": "$${CI_FORGE_CREDENTIALS}"
             }
           }
@@ -30,7 +26,7 @@ steps:
         /kaniko/executor
         --dockerfile=.mise/Dockerfile
         --context=dir://$${CI_WORKSPACE}/.mise
-        --destination=192.168.1.60:3000/$${CI_REPO}/toolbox:latest
+        --destination=$${CI_FORGE_HOST}/$${CI_REPO}/toolbox:latest
     backend_options:
       kubernetes:
         secrets:
@@ -40,7 +36,7 @@ steps:
               env: CI_FORGE_CREDENTIALS
 
   - name: Pull image on all nodes
-    image: alpine:latest
+    image: alpine:3.22
     commands:
       - apk add kubectl
       - |
@@ -61,10 +57,9 @@ steps:
             spec:
               containers:
                 - name: image-puller
-                  image: 192.168.1.60:3000/$${CI_REPO}/toolbox:latest
+                  image: $${CI_FORGE_HOST}/$${CI_REPO}/toolbox:latest
                   command: ["sh", "-c", "sleep infinity"]
         EOF
-      - sleep 1000
     backend_options:
       kubernetes:
         serviceAccountName: ci-runner
