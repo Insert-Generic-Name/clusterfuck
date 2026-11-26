@@ -43,4 +43,25 @@ steps:
     image: ghcr.io/osscontainertools/kaniko:v1.29.1-debug
     commands:
       - |
-        cat ./kubernetes/deployment/platform/woodpecker/woodpecker/puller.yaml
+        kubectl apply -f - <<EOF
+        apiVersion: apps/v1
+        kind: DaemonSet
+        metadata:
+          name: image-puller
+          namespace: woodpecker
+          labels:
+            kustomize.toolkit.fluxcd.io/reconcile: disabled
+        spec:
+          selector:
+            matchLabels:
+              name: image-puller
+          template:
+            metadata:
+              labels:
+                name: image-puller
+            spec:
+              containers:
+                - name: image-puller
+                  image: 192.168.1.60:3000/$${CI_REPO}/toolbox:latest
+                  command: ["sh", "-c", "sleep infinity"]
+        EOF
