@@ -43,8 +43,8 @@ steps:
         trap '
         EXIT_CODE=$?
         kubectl delete daemonset image-puller-$${CI_COMMIT_SHA} --ignore-not-found --timeout=1m
-        exit $EXIT_CODE'
-        EXIT
+        exit $EXIT_CODE
+        ' EXIT
 
         kubectl apply -f - <<EOF
         apiVersion: apps/v1
