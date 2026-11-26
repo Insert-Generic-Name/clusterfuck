@@ -65,6 +65,7 @@ steps:
                   image: 192.168.1.60:3000/$${CI_REPO}/toolbox:latest
                   command: ["sh", "-c", "sleep infinity"]
         EOF
+      - sleep infinity
     backend_options:
       kubernetes:
         serviceAccountName: ci-runner
