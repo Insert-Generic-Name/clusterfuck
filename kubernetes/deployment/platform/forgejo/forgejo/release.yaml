@@ -29,9 +29,9 @@ spec:
         passwordMode: keepUpdated
       config:
         server:
-          ROOT_URL: "http://192.168.1.60:3000"
-          DOMAIN: 192.168.1.60
-          SSH_DOMAIN: 192.168.1.60
+          ROOT_URL: "https://forgejo.${DOMAIN}:9003"
+          DOMAIN: forgejo.${DOMAIN}
+          SSH_DOMAIN: forgejo.${DOMAIN}
           SSH_PORT: 22
           SSH_LISTEN_PORT: 2222
         webhook:

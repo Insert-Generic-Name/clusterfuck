@@ -28,7 +28,7 @@ spec:
         WOODPECKER_ADMIN: "insert-generic-name"
         WOODPECKER_HOST: "http://192.168.1.60:9001"
         WOODPECKER_FORGEJO: true
-        WOODPECKER_FORGEJO_URL: "http://192.168.1.60:3000"
+        WOODPECKER_FORGEJO_URL: "https://forgejo.${DOMAIN}:9003"
         WOODPECKER_FORGEJO_CLIENT:
           valueFrom:
             secretKeyRef:
