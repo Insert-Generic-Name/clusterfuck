@@ -38,3 +38,9 @@ steps:
             key: ci-forge-credentials
             target:
               env: CI_FORGE_CREDENTIALS
+
+  - name: Pre-pull image on all nodes
+    image: ghcr.io/osscontainertools/kaniko:v1.29.1-debug
+    commands:
+      - |
+        cat ./kubernetes/deployment/platform/woodpecker/woodpecker/puller.yaml
