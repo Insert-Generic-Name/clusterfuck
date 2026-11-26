@@ -44,22 +44,35 @@ steps:
         apiVersion: apps/v1
         kind: DaemonSet
         metadata:
-          name: image-puller
+          name: image-puller-${{CI_COMMIT_SHA}}
           namespace: woodpecker
         spec:
           selector:
             matchLabels:
-              name: image-puller
+              name: image-puller-${{CI_COMMIT_SHA}}
           template:
             metadata:
               labels:
-                name: image-puller
+                name: image-puller-${{CI_COMMIT_SHA}}
             spec:
+              securityContext:
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
               containers:
                 - name: image-puller
+                  imagePullPolicy: Always
                   image: $${CI_FORGE_HOST}/$${CI_REPO}/toolbox:latest
                   command: ["sh", "-c", "sleep infinity"]
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
         EOF
+        kubectl rollout status daemonset/image-puller-${{CI_COMMIT_SHA} -n woodpecker --timeout=5m
+        kubectl delete daemonset/image-puller-${{CI_COMMIT_SHA}} -n woodpecker
     backend_options:
       kubernetes:
         serviceAccountName: ci-runner
