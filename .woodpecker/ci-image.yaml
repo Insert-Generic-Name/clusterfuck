@@ -39,7 +39,7 @@ steps:
             target:
               env: CI_FORGE_CREDENTIALS
 
-  - name: Pre-pull image on all nodes
+  - name: Pull image on all nodes
     image: alpine:latest
     commands:
       - apk add kubectl
@@ -65,3 +65,6 @@ steps:
                   image: 192.168.1.60:3000/$${CI_REPO}/toolbox:latest
                   command: ["sh", "-c", "sleep infinity"]
         EOF
+    backend_options:
+      kubernetes:
+        serviceAccountName: ci-runner
