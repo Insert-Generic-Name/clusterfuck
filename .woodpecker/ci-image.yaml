@@ -71,7 +71,7 @@ steps:
                         - ALL
                     runAsNonRoot: true
         EOF
-        kubectl rollout status daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker --timeout=5m
+        kubectl rollout status daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker --timeout=2m
         kubectl delete daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker
     backend_options:
       kubernetes:
