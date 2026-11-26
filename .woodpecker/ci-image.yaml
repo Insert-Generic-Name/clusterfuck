@@ -40,8 +40,9 @@ steps:
               env: CI_FORGE_CREDENTIALS
 
   - name: Pre-pull image on all nodes
-    image: ghcr.io/osscontainertools/kaniko:v1.29.1-debug
+    image: alpine:latest
     commands:
+      - apk add kubectl
       - |
         kubectl get pods
         kubectl apply -f - <<EOF
