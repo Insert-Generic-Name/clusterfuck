@@ -44,7 +44,6 @@ steps:
     commands:
       - apk add kubectl
       - |
-        kubectl get pods
         kubectl apply -f - <<EOF
         apiVersion: apps/v1
         kind: DaemonSet
