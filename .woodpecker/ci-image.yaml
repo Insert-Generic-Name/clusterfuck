@@ -40,7 +40,7 @@ steps:
     commands:
       - apk add --no-cache kubectl
       - |
-        trap 'kubectl delete daemonset image-puller-$${CI_COMMIT_SHA} --ignore-not-found --timeout=1m && exit 1' EXIT
+        trap 'kubectl delete daemonset image-puller-$${CI_COMMIT_SHA} --ignore-not-found --timeout=1m' EXIT
         kubectl apply -f - <<EOF
         apiVersion: apps/v1
         kind: DaemonSet
