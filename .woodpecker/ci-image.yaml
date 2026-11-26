@@ -40,7 +40,8 @@ steps:
     commands:
       - apk add --no-cache kubectl
       - |
-        trap 'kubectl delete daemonset image-puller-$${CI_COMMIT_SHA} --ignore-not-found --timeout=1m' EXIT
+        trap 'kubectl delete daemonset image-puller-$${CI_COMMIT_SHA} --ignore-not-found --timeout=1m && exit 0' EXIT
+
         kubectl apply -f - <<EOF
         apiVersion: apps/v1
         kind: DaemonSet
@@ -74,6 +75,7 @@ steps:
                         - ALL
                     runAsNonRoot: true
         EOF
+
         kubectl rollout status daemonset/image-puller-$${CI_COMMIT_SHA} -n woodpecker --timeout=2m
         exit 1
     backend_options:
