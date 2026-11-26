@@ -2,13 +2,19 @@ when:
   - event: ["push", "pull_request"]
 
 steps:
+  - name: Secret scan
+    image: ${IMAGE}
+    commands:
+      - git config --global --add safe.directory $${CI_WORKSPACE}
+      - mise exec -- gitleaks git --verbose --redact
+
   - depends_on: [] # Enable parallel execution on steps
     name: Terraform linting
     image: ${IMAGE}
     commands:
       - mise exec -- tflint --chdir=./terraform --recursive
     when:
-      - path: "**/*.tf"
+      - path: "terraform/**"
 
   - name: Cluster resources validation
     image: ${IMAGE}
